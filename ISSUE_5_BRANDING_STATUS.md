@@ -45,48 +45,23 @@ The application is **already configured** to use these branding assets:
 
 Due to network restrictions in the automated environment, I cannot directly download the images from GitHub's asset servers. **You need to manually upload the images** using one of these methods:
 
-## 📥 How to Upload the Branding Images
+## 📥 Complete Upload Instructions
 
-### Method 1: Via GitHub Web Interface (Recommended)
+**👉 See [IMAGE_UPLOAD_INSTRUCTIONS.md](IMAGE_UPLOAD_INSTRUCTIONS.md) for detailed step-by-step instructions!**
 
-1. **Save the images from Issue #5:**
-   - Go to: https://github.com/Lovable-LDCS/PartPulse-1/issues/5
-   - Right-click on each image
-   - Select "Save image as..."
-   - Save to your computer
+This comprehensive guide includes:
+- How to download images from Issue #5
+- Multiple upload methods (GitHub web UI, git command line)
+- Environmental network limitations explained
+- Verification steps
+- Troubleshooting help
 
-2. **Upload to the repository:**
-   - Navigate to: https://github.com/Lovable-LDCS/PartPulse-1/tree/main/public/assets
-   - Click "Add file" → "Upload files"
-   - Upload the images with these **exact filenames**:
-     - App Logo → rename to `logo.png`
-     - Pulse GIF → rename to `pulse.gif`
-     - App Header → rename to `header-reference.png` (for reference only)
+### Quick Summary
 
-3. **Commit the changes:**
-   - Add commit message: "Add Trane branding assets from Issue #5"
-   - Commit directly to the `main` branch
-   - The images will automatically appear in the deployed app
-
-### Method 2: Via Local Git (If you have git installed)
-
-```bash
-# 1. Clone the repository (if not already done)
-git clone https://github.com/Lovable-LDCS/PartPulse-1.git
-cd PartPulse-1
-
-# 2. Download images from Issue #5 and save them locally
-
-# 3. Copy the images to the assets folder
-cp /path/to/downloaded/logo.png public/assets/logo.png
-cp /path/to/downloaded/pulse.gif public/assets/pulse.gif
-cp /path/to/downloaded/header.png public/assets/header-reference.png
-
-# 4. Commit and push
-git add public/assets/
-git commit -m "Add Trane branding assets from Issue #5"
-git push origin main
-```
+1. **Download images from Issue #5**
+2. **Upload to GitHub** via web interface to `/public/assets/`
+3. **Verify** with `npm run verify-images`
+4. **View your branded app!**
 
 ## 🎨 What Happens After Upload
 

@@ -102,12 +102,22 @@ The app is configured for automatic deployment to GitHub Pages:
 
 ## 🎨 Customization
 
-### Company Logo
-Place your Trane Thermo King company logo at:
-```
-/public/assets/logo.png
-```
-Recommended dimensions: 300px × 100px (3:1 ratio)
+### Company Logo & Branding
+
+**📸 Need to upload branding images?** See [IMAGE_UPLOAD_INSTRUCTIONS.md](IMAGE_UPLOAD_INSTRUCTIONS.md) for:
+- Step-by-step upload guide (non-technical)
+- Environmental network limitations explained
+- Verification checklist
+- Troubleshooting help
+
+To add your branding assets:
+1. Download images from Issue #5
+2. Upload to `/public/assets/` folder via GitHub web interface
+3. Verify with: `npm run verify-images`
+
+**Required files:**
+- `/public/assets/logo.png` - Trane Thermo King logo (392×145 recommended)
+- `/public/assets/pulse.gif` - Animated pulse indicator (optional)
 
 ### Colors
 Primary color: `#FF2B00` (Trane red)
@@ -147,6 +157,12 @@ npm run typecheck
 npm run lint
 ```
 
+### Image Assets Verification
+```bash
+npm run verify-images
+```
+Checks if branding images from Issue #5 are properly uploaded.
+
 ### E2E Tests (Coming Soon)
 ```bash
 npm run test:e2e
@@ -154,6 +170,7 @@ npm run test:e2e
 
 ## 📚 Documentation
 
+- **Image Upload Guide**: See `IMAGE_UPLOAD_INSTRUCTIONS.md` for uploading branding images
 - **Access URLs**: See `ACCESS_URLS.md` for GitHub Pages URLs and verification steps
 - **Architecture**: See `rules.md` for complete architecture specification
 - **QA Requirements**: See `qa/requirements.json` for quality assurance checks
