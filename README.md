@@ -151,6 +151,9 @@ npm run test:e2e
 - **Architecture**: See `rules.md` for complete architecture specification
 - **QA Requirements**: See `qa/requirements.json` for quality assurance checks
 - **Database Schema**: See `supabase/migrations/` for database structure
+- **Logo & Assets Guide**: See `LOGO_AND_ASSETS_GUIDE.md` for uploading logos and GIFs
+- **Deployment Guide**: See `DEPLOYMENT.md` for deployment instructions
+- **Deployment Troubleshooting**: See `DEPLOYMENT_TROUBLESHOOTING.md` for fixing common issues
 
 ## 🔒 Security
 
@@ -168,9 +171,11 @@ npm run test:e2e
 3. Verify TypeScript: `npm run typecheck`
 
 ### GitHub Pages 404 Errors
+- **First time deploying?** See `DEPLOYMENT_TROUBLESHOOTING.md` for step-by-step setup
+- Ensure GitHub Pages is enabled: Settings → Pages → Source: "GitHub Actions"
 - Ensure `.nojekyll` file exists in output
 - Check `basePath` in `next.config.js`
-- Verify GitHub Pages is enabled in repository settings
+- Verify deployment workflow completes successfully in Actions tab
 
 ## 📞 Support
 

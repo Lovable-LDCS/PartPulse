@@ -4,10 +4,12 @@ import { usePreview } from '@/contexts/PreviewContext';
 import { useRole } from '@/contexts/RoleContext';
 import { Monitor, Smartphone } from 'lucide-react';
 import Image from 'next/image';
+import { useState } from 'react';
 
 export default function Header() {
   const { mode, setMode } = usePreview();
   const { role, setRole } = useRole();
+  const [pulseGifError, setPulseGifError] = useState(false);
 
   return (
     <header className="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
@@ -21,7 +23,34 @@ export default function Header() {
             unoptimized
           />
         </div>
-        <h1 className="text-2xl font-bold text-gray-800">PartPulse</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-gray-800">PartPulse</h1>
+          {/* Pulse animation - shows GIF if available, fallback to SVG */}
+          {!pulseGifError ? (
+            <div className="w-8 h-8 relative">
+              <Image
+                src="/assets/pulse.gif"
+                alt="Pulse animation"
+                width={32}
+                height={32}
+                className="object-contain"
+                unoptimized
+                onError={() => setPulseGifError(true)}
+              />
+            </div>
+          ) : (
+            <div className="w-8 h-8 relative">
+              <Image
+                src="/assets/pulse.svg"
+                alt="Pulse animation"
+                width={32}
+                height={32}
+                className="object-contain"
+                unoptimized
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="flex items-center gap-6">
