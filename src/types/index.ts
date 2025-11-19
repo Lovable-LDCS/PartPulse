@@ -17,6 +17,8 @@ export interface InternalTransfer {
   technician_name: string;
   ssid?: string;
   psid?: string;
+  po_number?: string;
+  site_name?: string;
   quantity: number;
   part_number: string;
   description: string;

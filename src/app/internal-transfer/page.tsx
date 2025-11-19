@@ -8,6 +8,8 @@ interface InternalTransferForm {
   date: string;
   ssidPsidType: 'SSID' | 'PSID' | '';
   ssidPsidValue: string;
+  poNumber: string;
+  siteName: string;
   quantity: string;
   partNumber: string;
   description: string;
@@ -20,6 +22,8 @@ export default function InternalTransferPage() {
       date: new Date().toISOString().split('T')[0],
       ssidPsidType: '',
       ssidPsidValue: '',
+      poNumber: '',
+      siteName: '',
       quantity: '',
       partNumber: '',
       description: '',
@@ -34,6 +38,8 @@ export default function InternalTransferPage() {
         date: new Date().toISOString().split('T')[0],
         ssidPsidType: '',
         ssidPsidValue: '',
+        poNumber: '',
+        siteName: '',
         quantity: '',
         partNumber: '',
         description: '',
@@ -47,7 +53,7 @@ export default function InternalTransferPage() {
     ));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Validate required fields
     const allValid = forms.every(form => 
@@ -64,22 +70,44 @@ export default function InternalTransferPage() {
       return;
     }
 
-    // In production, this would send data to API
-    console.log('Submitting forms:', forms);
-    alert('Internal transfer notifications submitted successfully!');
-    
-    // Reset forms
-    setForms([
-      {
-        id: Date.now().toString(),
-        date: new Date().toISOString().split('T')[0],
-        ssidPsidType: '',
-        ssidPsidValue: '',
-        quantity: '',
-        partNumber: '',
-        description: '',
-      },
-    ]);
+    try {
+      // Send email notification
+      const response = await fetch('/api/send-internal-transfer-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          forms,
+          technicianName: 'Current User', // In production, this would be from AuthContext
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email notification');
+      }
+
+      alert('Internal transfer notifications submitted successfully! Email sent to joline.kruger@tranetechnologies.com');
+      
+      // Reset forms
+      setForms([
+        {
+          id: Date.now().toString(),
+          date: new Date().toISOString().split('T')[0],
+          ssidPsidType: '',
+          ssidPsidValue: '',
+          poNumber: '',
+          siteName: '',
+          quantity: '',
+          partNumber: '',
+          description: '',
+        },
+      ]);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Error submitting form. Please try again.');
+    }
   };
 
   return (
@@ -127,6 +155,34 @@ export default function InternalTransferPage() {
                       value="Current User" // In production, this would be from AuthContext
                       disabled
                       className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600"
+                    />
+                  </div>
+
+                  {/* PO Number */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      PO Number
+                    </label>
+                    <input
+                      type="text"
+                      value={form.poNumber}
+                      onChange={(e) => updateForm(form.id, 'poNumber', e.target.value)}
+                      placeholder="Enter PO Number"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                  </div>
+
+                  {/* Site Name */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Site Name
+                    </label>
+                    <input
+                      type="text"
+                      value={form.siteName}
+                      onChange={(e) => updateForm(form.id, 'siteName', e.target.value)}
+                      placeholder="Enter Site Name"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
 

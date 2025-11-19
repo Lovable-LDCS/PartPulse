@@ -20,6 +20,8 @@ CREATE TABLE internal_transfers (
   technician_name TEXT NOT NULL,
   ssid TEXT,
   psid TEXT,
+  po_number TEXT,
+  site_name TEXT,
   quantity INTEGER NOT NULL CHECK (quantity > 0),
   part_number TEXT NOT NULL,
   description TEXT NOT NULL,
