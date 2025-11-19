@@ -1,0 +1,6 @@
+Place your Trane Thermo King company logo here as:
+- logo.png (recommended)
+- logo.svg
+- logo.jpg
+
+Recommended dimensions: 300px x 100px (or similar 3:1 ratio)

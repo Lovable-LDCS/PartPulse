@@ -1,0 +1,505 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-19",
+  "philosophies": {
+    "trueNorth": "Architecture is single source of truth",
+    "oneTimeBuild": "Build complete system before handover"
+  },
+  "categories": [
+    {
+      "name": "Architecture & Requirements",
+      "checks": [
+        {
+          "id": "ARCH-001",
+          "description": "rules.md exists and contains True North architecture",
+          "type": "file_exists",
+          "path": "rules.md",
+          "required": true
+        },
+        {
+          "id": "ARCH-002",
+          "description": "qa/requirements.json exists with machine-verifiable checks",
+          "type": "file_exists",
+          "path": "qa/requirements.json",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Environment Configuration",
+      "checks": [
+        {
+          "id": "ENV-001",
+          "description": "NEXT_PUBLIC_SUPABASE_URL environment variable present",
+          "type": "env_var",
+          "variable": "NEXT_PUBLIC_SUPABASE_URL",
+          "required": true,
+          "strictMode": true
+        },
+        {
+          "id": "ENV-002",
+          "description": "NEXT_PUBLIC_SUPABASE_ANON_KEY environment variable present",
+          "type": "env_var",
+          "variable": "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+          "required": true,
+          "strictMode": true
+        },
+        {
+          "id": "ENV-003",
+          "description": "SUPABASE_SERVICE_ROLE_KEY environment variable present",
+          "type": "env_var",
+          "variable": "SUPABASE_SERVICE_ROLE_KEY",
+          "required": true,
+          "strictMode": true
+        },
+        {
+          "id": "ENV-004",
+          "description": "RESEND_API_KEY environment variable present",
+          "type": "env_var",
+          "variable": "RESEND_API_KEY",
+          "required": true,
+          "strictMode": true
+        },
+        {
+          "id": "ENV-005",
+          "description": "Strict mode toggle (QA_STRICT) supported",
+          "type": "env_var",
+          "variable": "QA_STRICT",
+          "required": false,
+          "strictMode": false
+        }
+      ]
+    },
+    {
+      "name": "Type Safety & Code Quality",
+      "checks": [
+        {
+          "id": "TYPE-001",
+          "description": "TypeScript strict mode enabled in tsconfig.json",
+          "type": "config_check",
+          "path": "tsconfig.json",
+          "property": "compilerOptions.strict",
+          "expectedValue": true,
+          "required": true
+        },
+        {
+          "id": "TYPE-002",
+          "description": "TypeScript compilation passes (tsc --noEmit)",
+          "type": "command",
+          "command": "npx tsc --noEmit",
+          "required": true
+        },
+        {
+          "id": "LINT-001",
+          "description": "ESLint passes with no errors",
+          "type": "command",
+          "command": "npm run lint",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Build Integrity",
+      "checks": [
+        {
+          "id": "BUILD-001",
+          "description": "Next.js build completes successfully",
+          "type": "command",
+          "command": "npm run build",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Unit Tests",
+      "checks": [
+        {
+          "id": "UNIT-001",
+          "description": "Unit tests exist and pass",
+          "type": "command",
+          "command": "npm test",
+          "required": true
+        },
+        {
+          "id": "UNIT-002",
+          "description": "Form field validation tests exist",
+          "type": "file_pattern",
+          "pattern": "**/*.test.{ts,tsx}",
+          "minCount": 1,
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "E2E Tests",
+      "checks": [
+        {
+          "id": "E2E-001",
+          "description": "Playwright E2E tests configured",
+          "type": "file_exists",
+          "path": "playwright.config.ts",
+          "required": true
+        },
+        {
+          "id": "E2E-002",
+          "description": "E2E navigation tests exist",
+          "type": "file_pattern",
+          "pattern": "e2e/**/*.spec.ts",
+          "minCount": 1,
+          "required": true
+        },
+        {
+          "id": "E2E-003",
+          "description": "E2E tests pass",
+          "type": "command",
+          "command": "npx playwright test",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Wiring Tests (Runtime)",
+      "checks": [
+        {
+          "id": "WIRE-001",
+          "description": "Header Preview toggle visible and functional",
+          "type": "e2e_check",
+          "testFile": "e2e/wiring/header-preview.spec.ts",
+          "required": true
+        },
+        {
+          "id": "WIRE-002",
+          "description": "Desktop/Mobile mode switching works",
+          "type": "e2e_check",
+          "testFile": "e2e/wiring/preview-mode.spec.ts",
+          "required": true
+        },
+        {
+          "id": "WIRE-003",
+          "description": "Admin tab visibility when admin role",
+          "type": "e2e_check",
+          "testFile": "e2e/wiring/admin-tabs.spec.ts",
+          "required": true
+        },
+        {
+          "id": "WIRE-004",
+          "description": "Admin-only pages accessible and render",
+          "type": "e2e_check",
+          "testFile": "e2e/wiring/admin-pages.spec.ts",
+          "required": true
+        },
+        {
+          "id": "WIRE-005",
+          "description": "All sidebar tabs respond to clicks",
+          "type": "e2e_check",
+          "testFile": "e2e/wiring/sidebar-navigation.spec.ts",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Route Smoke Tests",
+      "checks": [
+        {
+          "id": "ROUTE-001",
+          "description": "All routes respond with 200 status",
+          "type": "smoke_test",
+          "routes": [
+            "/",
+            "/internal-transfer",
+            "/warranty-claims",
+            "/invite-members",
+            "/reports",
+            "/settings",
+            "/security-dashboard",
+            "/health-checker"
+          ],
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Database & Migrations",
+      "checks": [
+        {
+          "id": "DB-001",
+          "description": "Database migrations directory exists",
+          "type": "directory_exists",
+          "path": "supabase/migrations",
+          "required": true
+        },
+        {
+          "id": "DB-002",
+          "description": "Users table schema exists",
+          "type": "db_schema",
+          "table": "users",
+          "required": true
+        },
+        {
+          "id": "DB-003",
+          "description": "Internal transfers table schema exists",
+          "type": "db_schema",
+          "table": "internal_transfers",
+          "required": true
+        },
+        {
+          "id": "DB-004",
+          "description": "Warranty claims table schema exists",
+          "type": "db_schema",
+          "table": "warranty_claims",
+          "required": true
+        },
+        {
+          "id": "DB-005",
+          "description": "Audit log table schema exists",
+          "type": "db_schema",
+          "table": "audit_log",
+          "required": true
+        },
+        {
+          "id": "DB-006",
+          "description": "App settings table schema exists",
+          "type": "db_schema",
+          "table": "app_settings",
+          "required": true
+        },
+        {
+          "id": "DB-007",
+          "description": "RLS policies enabled on all tables",
+          "type": "db_rls",
+          "tables": ["users", "internal_transfers", "warranty_claims", "audit_log", "app_settings"],
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "API Health",
+      "checks": [
+        {
+          "id": "API-001",
+          "description": "Internal transfer API endpoint responds 200",
+          "type": "api_test",
+          "endpoint": "/api/internal-transfers",
+          "method": "GET",
+          "expectedStatus": 200,
+          "required": true
+        },
+        {
+          "id": "API-002",
+          "description": "Warranty claims API endpoint responds 200",
+          "type": "api_test",
+          "endpoint": "/api/warranty-claims",
+          "method": "GET",
+          "expectedStatus": 200,
+          "required": true
+        },
+        {
+          "id": "API-003",
+          "description": "User invitation API endpoint responds 200",
+          "type": "api_test",
+          "endpoint": "/api/invite-user",
+          "method": "POST",
+          "expectedStatus": 200,
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Email Integration",
+      "checks": [
+        {
+          "id": "EMAIL-001",
+          "description": "Resend API key configured",
+          "type": "env_var",
+          "variable": "RESEND_API_KEY",
+          "required": true,
+          "strictMode": true
+        },
+        {
+          "id": "EMAIL-002",
+          "description": "From email address configured",
+          "type": "env_var",
+          "variable": "EMAIL_FROM",
+          "required": false,
+          "fallback": "onboarding@resend.dev"
+        },
+        {
+          "id": "EMAIL-003",
+          "description": "Notification recipients managed in Settings (not hard-coded)",
+          "type": "code_check",
+          "description": "Verify email recipients come from app_settings table",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "UI/UX Consistency",
+      "checks": [
+        {
+          "id": "UI-001",
+          "description": "Primary color #FF2B00 used in theme",
+          "type": "config_check",
+          "path": "tailwind.config.ts",
+          "property": "theme.extend.colors.primary",
+          "expectedValue": "#FF2B00",
+          "required": true
+        },
+        {
+          "id": "UI-002",
+          "description": "Logo asset folder exists",
+          "type": "directory_exists",
+          "path": "public/assets",
+          "required": true
+        },
+        {
+          "id": "UI-003",
+          "description": "Responsive design implemented",
+          "type": "e2e_check",
+          "testFile": "e2e/ui/responsive.spec.ts",
+          "required": true
+        },
+        {
+          "id": "UI-004",
+          "description": "Sidebar navigation exists",
+          "type": "component_exists",
+          "component": "Sidebar",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Security Baseline",
+      "checks": [
+        {
+          "id": "SEC-001",
+          "description": "Sensitive keys not exposed in client-side code",
+          "type": "code_scan",
+          "pattern": "SUPABASE_SERVICE_ROLE_KEY|RESEND_API_KEY",
+          "locations": ["src/**/*.tsx", "src/**/*.ts"],
+          "shouldNotMatch": true,
+          "required": true
+        },
+        {
+          "id": "SEC-002",
+          "description": "Admin routes protected",
+          "type": "route_protection",
+          "routes": ["/invite-members", "/reports", "/settings", "/security-dashboard", "/health-checker"],
+          "requiredRole": "Admin",
+          "required": true
+        },
+        {
+          "id": "SEC-003",
+          "description": "Passwords hashed (Supabase Auth)",
+          "type": "documentation",
+          "description": "Verify Supabase Auth handles password hashing",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Reporting & Exports",
+      "checks": [
+        {
+          "id": "REPORT-001",
+          "description": "Reports page exists",
+          "type": "file_exists",
+          "path": "src/app/reports/page.tsx",
+          "required": true
+        },
+        {
+          "id": "REPORT-002",
+          "description": "Excel export functionality exists",
+          "type": "code_check",
+          "pattern": "xlsx|ExcelJS",
+          "locations": ["src/**/*.ts", "src/**/*.tsx"],
+          "required": true
+        },
+        {
+          "id": "REPORT-003",
+          "description": "Filters functional (Type, Date, Part Number, Technician)",
+          "type": "e2e_check",
+          "testFile": "e2e/reports/filters.spec.ts",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Logging & Audit",
+      "checks": [
+        {
+          "id": "AUDIT-001",
+          "description": "Audit logging implemented",
+          "type": "code_check",
+          "pattern": "audit_log|auditLog",
+          "locations": ["src/**/*.ts", "src/**/*.tsx"],
+          "required": true
+        },
+        {
+          "id": "AUDIT-002",
+          "description": "Critical events logged",
+          "type": "code_check",
+          "description": "Verify login, form submission, settings changes are logged",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Feature Implementation",
+      "checks": [
+        {
+          "id": "FEAT-001",
+          "description": "Internal Transfer form implemented",
+          "type": "file_exists",
+          "path": "src/app/internal-transfer/page.tsx",
+          "required": true
+        },
+        {
+          "id": "FEAT-002",
+          "description": "Warranty Claims form implemented",
+          "type": "file_exists",
+          "path": "src/app/warranty-claims/page.tsx",
+          "required": true
+        },
+        {
+          "id": "FEAT-003",
+          "description": "Invite Members page implemented",
+          "type": "file_exists",
+          "path": "src/app/invite-members/page.tsx",
+          "required": true
+        },
+        {
+          "id": "FEAT-004",
+          "description": "Settings page implemented",
+          "type": "file_exists",
+          "path": "src/app/settings/page.tsx",
+          "required": true
+        },
+        {
+          "id": "FEAT-005",
+          "description": "Security Dashboard implemented",
+          "type": "file_exists",
+          "path": "src/app/security-dashboard/page.tsx",
+          "required": true
+        },
+        {
+          "id": "FEAT-006",
+          "description": "Health Checker implemented",
+          "type": "file_exists",
+          "path": "src/app/health-checker/page.tsx",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalChecks": 0,
+    "requiredChecks": 0,
+    "implementationNotes": [
+      "Initial run should show all checks as RED",
+      "Build process aims for 100% GREEN before handover",
+      "New requirements trigger architecture update → QA update → build cycle",
+      "Wiring checks verify both static presence and runtime behavior",
+      "Strict mode can be toggled to control env var requirements in production"
+    ]
+  }
+}
