@@ -2,6 +2,18 @@
 
 This guide explains how to add the Trane logo and animated GIF to the PartPulse application.
 
+## 🎯 Quick Status - Issue #5
+
+**The branding images from Issue #5 are ready to be uploaded!**
+
+See `ISSUE_5_BRANDING_STATUS.md` for:
+- Confirmation that Issue #5 is visible
+- Direct links to the 3 branding images
+- Step-by-step upload instructions
+- Verification steps after upload
+
+---
+
 ## Adding the Trane Logo
 
 ### Option 1: Via GitHub Web Interface (Recommended)
